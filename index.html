@@ -626,45 +626,6 @@ body {
   transition: max-height .3s ease, padding .3s ease;
 }
 .month-body-collapsible.collapsed { max-height: 0; }
-
-/* ── Coming Soon Block ── */
-.coming-soon-section {
-  margin-bottom: 20px;
-}
-.coming-soon-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
-}
-.coming-soon-card {
-  background: var(--card); border: 1.5px dashed var(--border); border-radius: 12px;
-  padding: 20px; display: flex; flex-direction: column; gap: 10px;
-  position: relative; overflow: hidden; transition: border-color .2s, box-shadow .2s;
-}
-.coming-soon-card:hover { border-color: #cbd5e1; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
-.coming-soon-card::before {
-  content: 'COMING SOON';
-  position: absolute; top: 10px; right: -18px;
-  background: var(--amber); color: #fff;
-  font-size: 9px; font-weight: 800; letter-spacing: .1em;
-  padding: 3px 26px; transform: rotate(35deg);
-  font-family: ui-monospace, monospace;
-}
-.cs-icon { font-size: 28px; }
-.cs-title { font-size: 14px; font-weight: 800; color: var(--text); }
-.cs-desc  { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
-.cs-features { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-.cs-features li {
-  font-size: 12px; color: var(--muted); display: flex; gap: 7px; align-items: flex-start;
-}
-.cs-features li::before { content: '→'; color: var(--blue); font-weight: 700; flex-shrink: 0; }
-.cs-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 10px; font-weight: 700; padding: 3px 9px;
-  border-radius: 20px; align-self: flex-start;
-  font-family: ui-monospace, monospace; letter-spacing: .04em;
-}
-.cs-badge.planned { background: var(--blue-lt); color: var(--blue); border: 1px solid #93c5fd; }
-.cs-badge.data-ready { background: var(--green-lt); color: var(--green); border: 1px solid #86efac; }
 </style>
 </head>
 <body>
@@ -681,7 +642,7 @@ body {
   <div class="hdr-divider"></div>
   <div class="hdr-meta">
     <span class="hdr-badge badge-version">v2.0</span>
-    <span class="hdr-badge badge-readonly">GET · Read-Only</span>
+    <span class="hdr-badge badge-readonly">GET • Read-Only</span>
     <span class="hdr-badge badge-security" onclick="openSecurityModal()" title="View active security checks">
       🔒 Secure
     </span>
@@ -761,7 +722,7 @@ body {
 
     </div>
     <div class="modal-footer">
-      <span>Free tool · Paid custom development</span>
+      <span>Free tool • Paid custom development</span>
       <span style="font-family:ui-monospace,monospace">v2.0</span>
     </div>
   </div>
@@ -1067,8 +1028,8 @@ async function loadAllRecords() {
   try {
     const items = await getBatchSalesInvoice((loaded, total, page) => {
       status.textContent = total
-        ? `Page ${page} · ${loaded.toLocaleString()} / ${total.toLocaleString()} records`
-        : `Page ${page} · ${loaded.toLocaleString()} records loaded…`;
+        ? `Page ${page} • ${loaded.toLocaleString()} / ${total.toLocaleString()} records`
+        : `Page ${page} • ${loaded.toLocaleString()} records loaded…`;
       if (total) bar.style.width = Math.min(95, Math.round(loaded / total * 100)) + '%';
     });
 
@@ -1269,8 +1230,6 @@ function renderWithFilters() {
   // ── Insights ──
   html += buildInsights(grouped, monthKeys);
 
-  // ── Coming Soon ──
-  html += buildComingSoon();
 
   app.innerHTML = html;
 
@@ -1591,67 +1550,6 @@ function buildMonthBlockV2(m, key) {
 /* ══════════════════════════════════════════════
    COMING SOON SECTION
 ══════════════════════════════════════════════ */
-function buildComingSoon() {
-  return `
-  <div class="coming-soon-section">
-    <div class="section-header">🚀 Coming Soon <span class="badge" style="background:var(--amber-lt);color:var(--amber)">Planned Features</span></div>
-    <div class="coming-soon-grid">
-
-      <div class="coming-soon-card">
-        <div class="cs-icon">📦</div>
-        <div class="cs-title">Itemised Sales Analysis</div>
-        <div class="cs-desc">Break down revenue by individual product or service items across all invoices.</div>
-        <ul class="cs-features">
-          <li>Top-selling items by revenue & volume</li>
-          <li>Item performance across time periods</li>
-          <li>Revenue concentration analysis</li>
-          <li>Price change detection per item</li>
-        </ul>
-         <span class="cs-badge planned">⏳ Planned</span>
-      </div>
-
-      <div class="coming-soon-card">
-        <div class="cs-icon">👥</div>
-        <div class="cs-title">Customer Analysis</div>
-        <div class="cs-desc">Understand your customers — who buys most, trends, and segmentation.</div>
-        <ul class="cs-features">
-          <li>Top customers by revenue (Pareto 80/20)</li>
-          <li>Customer buying frequency & recency</li>
-          <li>New vs. returning customer breakdown</li>
-          <li>Customer revenue trend over time</li>
-        </ul>
-          <span class="cs-badge planned">⏳ Planned</span>
-      </div>
-<!--
-      <div class="coming-soon-card">
-        <div class="cs-icon">🎯</div>
-        <div class="cs-title">Sales Forecasting</div>
-        <div class="cs-desc">Predict future revenue using historical daily/monthly patterns.</div>
-        <ul class="cs-features">
-          <li>Next-month revenue projection</li>
-          <li>Seasonal adjustment factors</li>
-          <li>Confidence intervals on estimates</li>
-          <li>Day-of-week demand patterns</li>
-        </ul>
-        <span class="cs-badge planned">⏳ Planned</span>
-      </div>
-
-      <div class="coming-soon-card">
-        <div class="cs-icon">💳</div>
-        <div class="cs-title">Invoice Ageing & Receivables</div>
-        <div class="cs-desc">Track overdue invoices, payment delays, and cash flow exposure.</div>
-        <ul class="cs-features">
-          <li>Overdue invoice list with days past due</li>
-          <li>Ageing buckets (30 / 60 / 90+ days)</li>
-          <li>Average collection time by customer</li>
-          <li>Outstanding balance trend</li>
-        </ul>
-        <span class="cs-badge planned">⏳ Planned</span>
-      </div>
--->
-    </div>
-  </div>`;
-}
 
 /* ══════════════════════════════════════════════
    MONTH BLOCK (v1 kept for compatibility)
